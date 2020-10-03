@@ -19,5 +19,5 @@ public class Part {
     void setpartName(String partName){this.partName = partName;}
     void setpartURL(String partURL) {this.partURL = partURL;}
     void setIMG_URL(String img_URL) {this.img_URL = img_URL;}
-    void setprice(String price) {this.price = price;}
+    void setPrice(String price) {this.price = price;}
 }
