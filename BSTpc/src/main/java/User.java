@@ -21,11 +21,11 @@ public class User {
         wishlist = new WishList(userName);
     }
 
-    String getfirstName(){ return firstName;}
-    String getlastName(){ return lastName;}
-    String getemail(){ return email;}
-    String getuserName(){ return userName;}
-    String getIMG(){ return img_Location;}
+    String getfirstName(){return firstName;}
+    String getlastName(){return lastName;}
+    String getemail(){return email;}
+    String getuserName(){return userName;}
+    String getIMG(){return img_Location;}
 
     void setfirstName(String First){firstName = First;}
     void setlastName(String Last){lastName = Last;}
