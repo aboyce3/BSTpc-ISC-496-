@@ -33,6 +33,8 @@ public class User {
     void setIMG(String IMG){img_Location = IMG;}
     void setuserName(String userName){this.userName = userName;}
     void setWishlist(WishList wishlist) {this.wishlist = wishlist;}
+    void setAuctionedlist(Auctioned auctioned) {this.userAuctionedItems = auctioned;}
+    void setShoppingCart(ShoppingCart cart) {this.cart = cart;}
 
     void addToCart(Part item){cart.add(item);}
     void addToAuctionedlist(Part item){userAuctionedItems.add(item);}
