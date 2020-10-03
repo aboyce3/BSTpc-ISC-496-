@@ -1,15 +1,19 @@
-public class Auctioned {
-    String userName;
-    Part part;
+import java.util.ArrayList;
 
-    public Auctioned(String userName, Part part){
+public class Auctioned {
+    private String userName;
+    private ArrayList<Part> parts;
+
+    public Auctioned(String userName){
         this.userName = userName;
-        this.part = part;
+        parts = new ArrayList<>();
     }
 
     String getUserName(){return userName;}
-    Part getPart(){return part;}
+    ArrayList<Part> getParts(){return parts;}
 
     void setUserName(String userName){this.userName = userName;}
-    void setPart(Part part){this.part = part;}
+    void setPartsList(ArrayList<Part> parts){this.parts = parts;}
+
+    void add(Part part){parts.add(part);}
 }
