@@ -10,15 +10,15 @@ public class User {
     private Auctioned userAuctionedItems;
     private WishList wishlist;
 
-    public User(String User, String First, String Last, String email, String img){
+    public User(String user, String First, String Last, String email, String img){
         firstName = First;
         lastName = Last;
         this.email = email;
         img_Location = img;
-        userName = User;
-        cart = new ShoppingCart(userName);
-        userAuctionedItems = new Auctioned(userName);
-        wishlist = new WishList(userName);
+        userName = user;
+        cart = new ShoppingCart(user);
+        userAuctionedItems = new Auctioned(user);
+        wishlist = new WishList(user);
     }
 
     String getfirstName(){return firstName;}
