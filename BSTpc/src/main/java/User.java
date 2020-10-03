@@ -32,7 +32,7 @@ public class User {
     void setemail(String email){this.email = email;}
     void setIMG(String IMG){img_Location = IMG;}
     void setuserName(String userName){this.userName = userName;}
-    void setWishlist(WishList wishlist) {this.wishlist = wishlist;}
+    void setWishList(WishList wishlist) {this.wishlist = wishlist;}
     void setAuctionedlist(Auctioned auctioned) {this.userAuctionedItems = auctioned;}
     void setShoppingCart(ShoppingCart cart) {this.cart = cart;}
 
