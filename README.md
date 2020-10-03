@@ -10,4 +10,5 @@ This is a class project for ISC 496 where users can "buy, sell, and trade" compu
 More updates to come about the project as we progress further into development.
 
 
-Credits: Andrew Boyce, Henry Oulette
+Credits: Andrew Boyce (Back-end & Database Design)
+         Henry Ouellette (Front-end & UX Design)
