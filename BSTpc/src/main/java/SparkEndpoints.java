@@ -3,7 +3,7 @@ import static spark.Spark.*;
 public class SparkEndpoints {
     public static void main(String[] args) {
         staticFileLocation("/public");
-        get("/hello", (req, res) -> "<!DOCTYPE html>\n" +
+        get("/home", (req, res) -> "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "    <head>\n" +
                 "        <title>Welcome to BSTpc!</title>\n" +
