@@ -3,7 +3,7 @@
 
 This is a class project for ISC 496 where users can "buy, sell, and trade" computer parts. This project utilizes a MySQL database with the following UML Class Diagram:
 
-![alt text](https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/DiagramsAndMiscellaneous/BST_Parts_UML_COMPLETE(1).png)
+![alt text](https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/DiagramsAndMiscellaneous/BST_Parts_UML_COMPLETE.png)
 
 Color palette:
 
