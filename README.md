@@ -1,5 +1,5 @@
 # Capstone ISC496 Project
-## BSTpc - Buy and Sell PC Parts!
+## TPC - Trade PC Parts!
 <br/>
 <div align="center">
 <a href="https://github.com/aboyce3/BSTpc-ISC-496-/releases">
