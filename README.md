@@ -28,8 +28,8 @@ Credits: Andrew Boyce (Back-end & Database Design)
 [ER][ER]
 <br />
 [Java Spark][Spark]
-[UML]:[https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png]
+[UML]:https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png
 <br />
-[ER]:[https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg]
+[ER]:https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg
 <br />
-[Spark]:[http://sparkjava.com/]
+[Spark]:http://sparkjava.com/
