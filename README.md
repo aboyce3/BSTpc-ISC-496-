@@ -43,6 +43,6 @@
 
 <img src = "https://badgen.net/github/tag/aboyce3/BSTpc-ISC-496-?cache=300"/>
 <a href="https://discord.gg/dZCPrPA">
-<img src = "https://badgen.net/badge/icon/Join Our Discord?icon=discord&label?cache=300"></a>
+<img src = "https://badgen.net/badge/icon/Join Our Discord?icon=discord&label"></a>
 
 ### Credits: Andrew Boyce (Back-end & Database Design) & Henry Ouellette (Front-end & UX Design)
