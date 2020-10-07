@@ -3,7 +3,7 @@
 
 | ER Diagram | UML Diagram |
 | ---------- | ----------- |
-| [ER] | [UML] | 
+| ![ER Diagram][ER] | ![UML Diagram][UML] | 
 
 Color palette:
 
