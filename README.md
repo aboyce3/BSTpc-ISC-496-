@@ -3,8 +3,7 @@
 
 | ER Diagram | UML Diagram |
 | ---------- | ----------- |
-| A simle database design with 4 tables | Complex relationships |
-| <img src="https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png"/> |   <img src="https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg"/> | 
+| [ER] | [UML] | 
 
 Color palette:
 
@@ -21,3 +20,8 @@ Color palette:
 
 Credits: Andrew Boyce (Back-end & Database Design)
          Henry Ouellette (Front-end & UX Design)
+
+# Links
+
+[UML]: https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png
+[ER]: https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg
