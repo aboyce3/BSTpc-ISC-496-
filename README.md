@@ -11,7 +11,7 @@
 <a href="https://github.com/aboyce3/BSTpc-ISC-496-/commits">
 <img src = "https://badgen.net/github/commits/aboyce3/BSTpc-ISC-496-/main?cache=300"/></a>
 <a href="https://github.com/aboyce3/BSTpc-ISC-496-/commits">
-<img src = "https://badgen.net/github/last-commit/aboyce3/BSTpc-ISC-496-/main?cache=300"/></a>
+<img src = "https://badgen.net/github/last-commit/aboyce3/BSTpc-ISC-496-/main"/></a>
 <br/>
 <a href="https://github.com/aboyce3/BSTpc-ISC-496-/graphs/contributors">
 <img src = "https://badgen.net/github/contributors/aboyce3/BSTpc-ISC-496-?cache=300"/></a>
