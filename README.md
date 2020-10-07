@@ -3,18 +3,18 @@
 <br/>
 <div align="center">
 <a href="https://github.com/aboyce3/BSTpc-ISC-496-/releases">
-<img src = "https://badgen.net/github/release/aboyce3/BSTpc-ISC-496-"/></a>
+<img src = "https://badgen.net/github/release/aboyce3/BSTpc-ISC-496-?cache=300"/></a>
 <br/>
 <a href="https://github.com/aboyce3/BSTpc-ISC-496-/issues">
-<img src = "https://badgen.net/github/issues/aboyce3/BSTpc-ISC-496-"/></a>
+<img src = "https://badgen.net/github/issues/aboyce3/BSTpc-ISC-496-?cache=300"/></a>
 <br/>
 <a href="https://github.com/aboyce3/BSTpc-ISC-496-/commits">
-<img src = "https://badgen.net/github/commits/aboyce3/BSTpc-ISC-496-/main"/></a>
+<img src = "https://badgen.net/github/commits/aboyce3/BSTpc-ISC-496-/main?cache=300"/></a>
 <a href="https://github.com/aboyce3/BSTpc-ISC-496-/commits">
-<img src = "https://badgen.net/github/last-commit/aboyce3/BSTpc-ISC-496-/main"/></a>
+<img src = "https://badgen.net/github/last-commit/aboyce3/BSTpc-ISC-496-/main?cache=300"/></a>
 <br/>
 <a href="https://github.com/aboyce3/BSTpc-ISC-496-/graphs/contributors">
-<img src = "https://badgen.net/github/contributors/aboyce3/BSTpc-ISC-496-"/></a>
+<img src = "https://badgen.net/github/contributors/aboyce3/BSTpc-ISC-496-?cache=300"/></a>
 </div>
 
 | ER Diagram | UML Diagram |
@@ -41,8 +41,8 @@
 [UML]: https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png
 [ER]: https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg
 
-<img src = "https://badgen.net/github/tag/aboyce3/BSTpc-ISC-496-"/>
+<img src = "https://badgen.net/github/tag/aboyce3/BSTpc-ISC-496-?cache=300"/>
 <a href="https://discord.gg/dZCPrPA">
-<img src = "https://badgen.net/badge/icon/Join Our Discord?icon=discord&label"></a>
+<img src = "https://badgen.net/badge/icon/Join Our Discord?icon=discord&label?cache=300"></a>
 
 ### Credits: Andrew Boyce (Back-end & Database Design) & Henry Ouellette (Front-end & UX Design)
