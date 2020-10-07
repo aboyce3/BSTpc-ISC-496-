@@ -23,8 +23,13 @@ Credits: Andrew Boyce (Back-end & Database Design)
 
 # Links
 
-[UML Diagram](https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png "UML Diagram")
+![UML][UML]
 <br />
-[ER Diagram](https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg "ER Diagram")
+![ER][ER]
 <br />
-[Java Spark](http://sparkjava.com/ "Java Spark")
+![Java Spark][Spark]
+[UML][https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png]
+<br />
+[ER][https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg]
+<br />
+[Spark][http://sparkjava.com/]
