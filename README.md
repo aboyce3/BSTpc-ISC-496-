@@ -23,7 +23,8 @@ Credits: Andrew Boyce (Back-end & Database Design)
 
 # Links
 
-![ER][ER]<br/>
-![UML][UML]
+![ER](https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg)<br/>
+![UML](https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png)
+
 [UML]: https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png
 [ER]: https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg
