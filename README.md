@@ -1,15 +1,9 @@
 # Capstone ISC496 Project
 ## BSTpc - Buy and Sell PC Parts!
 
-
-<p>This is a class project for ISC 496 where users can "buy, sell, and trade" computer parts. This project utilizes a MySQL database with the following UML Class Diagram:</p>
-
-<p align="left">
-  <img src="https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png"/>
-</p>
-
 | ER Diagram | UML Diagram |
 | ---------- | ----------- |
+| A simle database design with 4 tables | Complex relationships |
 | <img src="https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png"/> |   <img src="https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg"/> | 
 
 Color palette:
