@@ -3,7 +3,7 @@
 
 | ER Diagram | UML Diagram |
 | ---------- | ----------- |
-| ![ER Diagram][ER] | ![UML Diagram][UML] | 
+| [ER Diagram][ER] | [UML Diagram][UML] | 
 
 Color palette:
 
@@ -23,13 +23,13 @@ Credits: Andrew Boyce (Back-end & Database Design)
 
 # Links
 
-![UML][UML]
+[UML][UML]
 <br />
-![ER][ER]
+[ER][ER]
 <br />
-![Java Spark][Spark]
-[UML][https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png]
+[Java Spark][Spark]
+[UML]:[https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png]
 <br />
-[ER][https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg]
+[ER]:[https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram.svg]
 <br />
-[Spark][http://sparkjava.com/]
+[Spark]:[http://sparkjava.com/]
