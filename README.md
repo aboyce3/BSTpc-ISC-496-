@@ -38,11 +38,11 @@
 
 # Links
 
-[ER](https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram_Updated.svg)<br/>
+[ER](https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ER.svg)<br/>
 [UML](https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png)
 
 [UML]: https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/BST_Parts_UML.png
-[ER]: https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ERDiagram_Updated.svg
+[ER]: https://github.com/aboyce3/BSTpc-ISC-496-/blob/main/Diagrams/ER.svg
 
 <img src = "https://flat.badgen.net/github/tag/aboyce3/BSTpc-ISC-496-?cache=300"/>
 <a href="https://discord.gg/dZCPrPA">
