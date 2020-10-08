@@ -10,72 +10,70 @@
 html{
     background-color: #9e9e9e;
     font-size:16px;
+    height:100%;
 }
-
 .header{
-    background-color: #616161;
-    padding:10px;
+    background:#616161;
+    height:10%;
 }
-
-.header a:hover{color:#03A9F4;}
-
 .header a{
     text-decoration: none;
-    color:#212121;
-    font-family:'Oswald', sans-serif;
-    padding:5px;
-    float:left;
-}
-
-.second-header{float:right;}
-.search {
+    color:black;
+    font-family:'Courier Prime', monospace;
+    font-size:18px;
     display:inline-block;
-    position: relative;
-    padding-left:5px;
+    padding:10px;
 }
-
-.search button{
-    position:absolute;
-    margin-left: 5%;
-    top: 50%;
-    -ms-transform: translateY(-50%);
-    transform: translateY(-50%);
+.header a:hover{
+    color:#03A9F4;
+    transition:ease, 0.5s;
 }
-
-/* Dropdown courtesy of w3Schools: 
-   https://www.w3schools.com/howto/howto_js_dropdown_sidenav.asp */
-
-.sidebar{
-    height:100%;
+.header-float-right{
+    float:right;
+}
+.search-bar{
+    text-align:center;
+}
+.search-bar input .search-bar{
+    height: 70px;
+    width:350px;
+    font-size:relative;
+}
+input[type="text"]{
+    font-size:150%;
+}
+.header-center{
+    text-align:center;
+}
+.sidenavigation{
+    overflow:auto;
     width:200px;
     position:fixed;
     z-index:1;
-    background-color: #616161;
+    top:6%;
+    background-color:#616161;
     overflow-x:hidden;
-    padding-top:15px;
-}
-
-.sidebar a, .sidebar-dropdown{
-    padding:6px 8px 6px 16px;
-    text-decoration: none;
-    color:black;
-    display:block;
-    border:none;
-    background:none;
-    width:100%;
-    text-align: left;
-    cursor: pointer;
-    outline:none;
-    font-size:16px;
     font-family:'Courier Prime', monospace;
 }
-
-.down a{
-    padding-left: 20%;
+.drop-btn, .drop-content a{
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: inline-block;
+    border: none;
+    background: none;
+    cursor: pointer;
+    outline: none;
+    font-family: 'Courier Prime', monospace;
+    padding:15px;
 }
-
-.sidebar a:hover, .sidebar-dropdown:hover{
+.drop-content{
+    display:none;
+    padding-left:20px;
+}
+.drop-btn:hover{
     color:#03A9F4;
+    transition:ease,0.5s;
 }
 
 /*
