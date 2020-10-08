@@ -13,7 +13,7 @@ html{
     height:100%;
 }
 .header{
-    background:#616161;
+    background-color:#616161;
     height:10%;
 }
 .header a{
@@ -32,12 +32,10 @@ html{
     float:right;
 }
 .search-bar{
-    text-align:center;
-}
-.search-bar input .search-bar{
-    height: 70px;
-    width:350px;
-    font-size:relative;
+    position: relative;
+    top:20px;
+    width:450px;
+    margin:0 auto;
 }
 input[type="text"]{
     font-size:150%;
@@ -68,18 +66,47 @@ input[type="text"]{
     padding:15px;
 }
 .drop-content{
-    display:none;
+    display:block;
     padding-left:20px;
 }
 .drop-btn:hover{
     color:#03A9F4;
     transition:ease,0.5s;
 }
+.logo{
+    position:relative;
+    top:20px;
+}
+.logo .tpc{
+    margin:0 auto;
+    text-align:center;
+    font-family:'Courier Prime',monospace;
+    font-size:105px;
+    letter-spacing: 45px;
+    font-weight: 700;
+    font-style:italic;
+    text-shadow: #03A9F4 2px 2px;
+    border:solid;
+    padding:55px;
+    width:35%;
+    background-color:#616161;
+}
+.logo .tpc:hover{
+    transition:ease-in, 1s;
+    background-color:#03A9F4;
+}
+.logo .search-bar .search{
+    position:relative;
+    width:100%;
+}
+.logo .search-bar .submit{
+    position:relative;
+    left:10px;
+}
+.logo .search-bar table tr td{
+    width:100%;
+}
 
 /*
     font-family: 'Courier Prime', monospace;
-
-    font-family: 'Oswald', sans-serif;
-
-    font-family: 'Secular One', sans-serif;
 */
