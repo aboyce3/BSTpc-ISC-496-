@@ -14,3 +14,11 @@ for(i = 0; i < drop.length; i++){
         });
     }
 }
+
+function showForm(a){
+    if(a == 1){
+        document.getElementById("loginForm").style.display="none";
+    } else {
+        document.getElementById("loginForm").style.display="block";
+    }
+}

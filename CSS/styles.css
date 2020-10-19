@@ -37,9 +37,6 @@ html{
     width:450px;
     margin:0 auto;
 }
-input[type="text"]{
-    font-size:150%;
-}
 .header-center{
     text-align:center;
 }
@@ -87,10 +84,33 @@ input[type="text"]{
     width:100%;
     left:20%;
 }
+#loginForm{
+    overflow:auto;
+    display:block;
+    z-index:1;
+    background-color:#616161;
+    font-family:'Courier Prime', monospace;
+    position:fixed;
+    top:50%;
+    left:50%;
+    width:30em;
+    height:18em;
+    margin-top:-9em;
+    margin-left:-15em;
+    display:table;
+    padding:25px;
+    border:outset;
+    border-radius:10px;
+}
+#loginForm input, label{display:table-cell;}
+#loginForm p{
+    display:table-row;
+}
 .submit{
-    vertical-align: middle;
-    display:inline-block;
-    height:100%;
+    text-decoration: none;
+    border-style:outset;
+    background:none;
+
 }
 #red{
     color:red;
