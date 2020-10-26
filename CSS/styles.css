@@ -30,6 +30,7 @@ html{
 }
 .header-float-right{
     float:right;
+    padding:10px;
 }
 .search-bar{
     position: relative;
@@ -97,7 +98,7 @@ html{
     height:18em;
     margin-top:-9em;
     margin-left:-15em;
-    display:table;
+    display:none;
     padding:25px;
     border:outset;
     border-radius:10px;
@@ -112,8 +113,26 @@ html{
     background:none;
 
 }
+#login-button{
+    text-decoration: none;
+    border-style:outset;
+    background:none;
+}
+
+#login-button-negative{
+    background-color:red;
+    border-color:black;
+    color:white;
+}
+#register{
+    border-color:black;
+    color:white;
+}
 #red{
     color:red;
+}
+#message{
+    background-color: black;
 }
 /*
     font-family: 'Courier Prime', monospace;

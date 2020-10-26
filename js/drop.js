@@ -18,7 +18,21 @@ for(i = 0; i < drop.length; i++){
 function showForm(a){
     if(a == 1){
         document.getElementById("loginForm").style.display="none";
+        document.getElementById("login-button").style.display="inline-block";
     } else {
-        document.getElementById("loginForm").style.display="block";
+        document.getElementById("loginForm").style.display="table";
+        document.getElementById("login-button").style.display="none";
     }
 }
+
+function check() {
+    if(document.getElementById('password').value ==
+        document.getElementById('confirm_password').value) {
+            document.getElementById('register').disabled = false;
+            document.getElementById('register').style.backgroundColor = "green"
+        } else if(document.getElementById('password').value == '' || 
+                    document.getElementById('confirm_password').value == ''){
+            document.getElementById('register').disabled = true;
+            document.getElementById('register').style.backgroundColor = "red"
+        }
+  }

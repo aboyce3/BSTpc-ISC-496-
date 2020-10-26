@@ -33,26 +33,43 @@
                 </div>
             </div>
         <div class="header-float-right">
-            <button class="login" onclick="showForm(2)"># Login</button>
+            <button id="login-button"onclick="showForm(2)"># Login</button>
             <form id="loginForm">
                 <p>
                 <label for="username">Username: <span id="red">*</span></label>
                 <input type="text" name="username" id="username" required></input><br>
                 </p>
+                <br>
                 <p>
                 <label for="password">Password: <span id="red">*</span></label>
-                <input type="password" name="username" id="username" requried></input><br>
+                <input type="password" name="password" id="password" onchange="check()" requried></input><br>
                 </p>
+                <p>
+                <label for="password">Confirm Password: <span id="red">*</span></label>
+                <input type="password" name="confirm_password" id="confirm_password" onchange="check()" requried></input><br>
+                <span id = "message"></span>
+                </p>
+                <br>
                 <p>
                 <label for="fName">First Name: <span id="red">*</span></label>
-                <input type="text" name="fName" id="fName" reuired></input>
+                <input type="text" name="fName" id="fName" required></input>
                 </p>
                 <p>
-                <input class="submit" type="submit" value="Register!"></input> 
+                <label for="lName">Last Name: <span id="red">*</span></label>
+                <input type="text" name="lName" id="lName" required></input>
+                </p>
+                <br>
+                <p>
+                <label for="email">Email: <span id="red">*</span></label>
+                <input type="email" name="email" id="email" required></input>
+                </p>
+                <br>
+                <p>
+                <input id="register" id="login-button-positive" type="submit" value="Register!" disabled></input> 
                 </p>
                 <p>
                 <br/>
-                <button class="login" onclick="showForm(1)">Close Form</button>
+                <button id="login-button-negative" onclick="showForm(1)">Close Form</button>
             </form>
         </div>
         <div class="logo">
