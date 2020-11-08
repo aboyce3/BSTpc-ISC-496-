@@ -16,6 +16,21 @@ html{
     background-color:#616161;
     height:10%;
 }
+.logo-reg{
+    position:fixed;
+    top:15%;
+    left:47%;
+    width:30em;
+    height:18em;
+    margin-top:-9em;
+    margin-left:-15em;
+}
+.submit{
+    text-decoration: none;
+    border-style:outset;
+    background:none;
+
+}
 .header a{
     text-decoration: none;
     color:black;
@@ -27,10 +42,6 @@ html{
 .header a:hover{
     color:#03A9F4;
     transition:ease, 0.5s;
-}
-#right{
-    float:right;
-    padding:10px;
 }
 .search-bar{
     position: relative;
@@ -85,6 +96,19 @@ html{
     width:100%;
     left:20%;
 }
+#center{
+    background-color:#212121;
+    color:white;
+    transition:ease, 0.5s;
+    padding-left:20px;
+    padding-right:20px;
+    
+}
+#center:hover{
+    transition:ease, 0.5s;
+    background-color:#616161;
+    color:black;
+}
 #regForm{
     overflow:auto;
     display:block;
@@ -107,7 +131,10 @@ html{
 #regForm p{
     display:table-row;
 }
-
+#serial{
+    width:45%;
+    overflow: hidden;
+}
 #loginForm{
     overflow:auto;
     display:block;
@@ -130,18 +157,15 @@ html{
 #loginForm p{
     display:table-row;
 }
-.submit{
-    text-decoration: none;
-    border-style:outset;
-    background:none;
-
+#right{
+    float:right;
+    padding:10px;
 }
 #login-button{
     text-decoration: none;
     border-style:outset;
     background:none;
 }
-
 #login-button-negative{
     background-color:red;
     border-color:black;
@@ -159,14 +183,15 @@ html{
 a:visited{
     color:black;
 }
-.logo-reg{
-    position:fixed;
-    top:15%;
-    left:47%;
-    width:30em;
-    height:18em;
-    margin-top:-9em;
-    margin-left:-15em;
+#checks{
+    background-color:#212121;
+    color:white;
+    padding:15px;
+}
+#flair{
+    text-shadow: 2px 2px #212121;
+    font-size:30px;
+    margin: 0 auto;
 }
 /*
     font-family: 'Courier Prime', monospace;

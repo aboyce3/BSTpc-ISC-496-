@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Welcome to BSTpc!</title>
+        <link href="https://fonts.googleapis.com/css2?
+                    family=Courier+Prime:ital,wght@0,
+                    400;0,700;1,400;1,700&display=swap"
+                    rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
+    </head>
+        <div class="logo-reg">
+            <img src="../assets/logo.gif" alt="TPC">
+            </div>
+<form id="loginForm">
+<p>
+    <label for="partName">Part Name: <span id="red">*</span></label>
+    <input type="text" name="partName" id="partName" required></input><br/>
+</p>
+<p>
+    <label for="price">Asking Price (USD): <span id="red">*</span></label>
+    <input type="number" name="price" id="price" required></input><br/>
+</p>
+<p>
+    <label for="serial">Serial #</label>
+    <input type="number" name="serial" id="serial"></input><br/>
+</p>
+<p>
+    <label for="description">Description <span id="red">*</span></label>
+    <input type="text" name="description" id="description" required></input><br/>
+</p>
+<hr/>
+<h2 id="flair">Condition</h2>
+<div id="checks">
+<p>
+    <input type="checkbox" id="new" name="new" value="new">
+    <label for="new">New</label>
+</p>
+<p>
+    <input type="checkbox" id="used" name="used" value="used">
+    <label for="used">Used</label>
+</p>
+<p>
+    <input type="checkbox" id="refurbished" name="refurbished" value="refurbished">
+    <label for="refurbished">Refurbished</label>
+</p>
+</div><br>
+<p><input id="register" type="submit" value="Add Part"></input></p><br>
+    <a href = "home.html"> Close Form</a>
+    </form>
+    <script src = "../js/drop.js"></script>
+    </html>
