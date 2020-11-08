@@ -2,10 +2,6 @@
 <html>
     <head>
         <title>Welcome to BSTpc!</title>
-        <script src="../js/bootstrap.min.js"
-        integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s"
-        crossorigin="anonymous">
-        </script>
         <link href="https://fonts.googleapis.com/css2?
                     family=Courier+Prime:ital,wght@0,
                     400;0,700;1,400;1,700&display=swap"
@@ -32,46 +28,8 @@
                     <a href="#">USB Flash Drives & Memory Cards</a>
                 </div>
             </div>
-        <div class="header-float-right">
-            <button id="login-button"onclick="showForm(2)"># Login</button>
-            <form id="loginForm">
-                <p>
-                <label for="username">Username: <span id="red">*</span></label>
-                <input type="text" name="username" id="username" required></input><br>
-                </p>
-                <br>
-                <p>
-                <label for="password">Password: <span id="red">*</span></label>
-                <input type="password" name="password" id="password" onchange="check()" requried></input><br>
-                </p>
-                <p>
-                <label for="password">Confirm Password: <span id="red">*</span></label>
-                <input type="password" name="confirm_password" id="confirm_password" onchange="check()" requried></input><br>
-                <span id = "message"></span>
-                </p>
-                <br>
-                <p>
-                <label for="fName">First Name: <span id="red">*</span></label>
-                <input type="text" name="fName" id="fName" required></input>
-                </p>
-                <p>
-                <label for="lName">Last Name: <span id="red">*</span></label>
-                <input type="text" name="lName" id="lName" required></input>
-                </p>
-                <br>
-                <p>
-                <label for="email">Email: <span id="red">*</span></label>
-                <input type="email" name="email" id="email" required></input>
-                </p>
-                <br>
-                <p>
-                <input id="register" id="login-button-positive" type="submit" value="Register!" disabled></input> 
-                </p>
-                <p>
-                <br/>
-                <button id="login-button-negative" onclick="showForm(1)">Close Form</button>
-            </form>
-        </div>
+            <a id="right" href="login.html">Login</a>
+            <a id="right" href="register.html">Register</a>
         <div class="logo">
             <img src="../assets/logo.gif" alt="TPC">
         <div class="search-bar">

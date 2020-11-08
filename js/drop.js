@@ -17,6 +17,10 @@ for(i = 0; i < drop.length; i++){
 
 function showForm(a){
     if(a == 1){
+        document.getElementById("regForm").style.display="none";
+        document.getElementById("login-button").style.display="inline-block";
+    }
+    if(a == 2){
         document.getElementById("loginForm").style.display="none";
         document.getElementById("login-button").style.display="inline-block";
     } else {

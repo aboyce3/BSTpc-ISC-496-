@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Welcome to BSTpc!</title>
+        <link href="https://fonts.googleapis.com/css2?
+                    family=Courier+Prime:ital,wght@0,
+                    400;0,700;1,400;1,700&display=swap"
+                    rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
+    </head>
+    <div class="logo-reg">
+            <img src="../assets/logo.gif" alt="TPC">
+            </div>
+<form id="regForm">
+    <p>
+        <label for="username">Username: <span id="red">*</span></label>
+        <input type="text" name="username" id="username" required></input><br>
+        </p>
+        <br>
+    <p>
+        <label for="password">Password: <span id="red">*</span></label>
+        <input type="password" name="password" id="password" onchange="check()" requried></input><br>
+        </p>
+    <p>
+        <label for="password">Confirm Password: <span id="red">*</span></label>
+        <input type="password" name="confirm_password" id="confirm_password" onchange="check()" requried></input><br>
+        <span id = "message"></span>
+        </p>
+        <br>
+    <p>
+        <label for="fName">First Name: <span id="red">*</span></label>
+        <input type="text" name="fName" id="fName" required></input>
+        </p>
+    <p>
+        <label for="lName">Last Name: <span id="red">*</span></label>
+        <input type="text" name="lName" id="lName" required></input>
+        </p>
+        <br>
+    <p>
+        <label for="email">Email: <span id="red">*</span></label>
+        <input type="email" name="email" id="email" required></input>
+        </p>
+        <br>
+        <p>
+    <input id="register" id="login-button-positive" type="submit" value="Register!" disabled></input> 
+        </p>
+    <p>
+    <br/>
+    <!--<button id="login-button-negative" onclick="showForm(5)">Close Form</button>-->
+    <a href = "home.html"> Close Form</a>
+</form>
+<script src = "../js/drop.js"></script>
+</html>

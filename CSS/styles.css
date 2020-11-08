@@ -28,7 +28,7 @@ html{
     color:#03A9F4;
     transition:ease, 0.5s;
 }
-.header-float-right{
+#right{
     float:right;
     padding:10px;
 }
@@ -85,6 +85,29 @@ html{
     width:100%;
     left:20%;
 }
+#regForm{
+    overflow:auto;
+    display:block;
+    z-index:1;
+    background-color:#616161;
+    font-family:'Courier Prime', monospace;
+    position:fixed;
+    top:50%;
+    left:50%;
+    width:30em;
+    height:18em;
+    margin-top:-9em;
+    margin-left:-15em;
+    display:table;
+    padding:25px;
+    border:outset;
+    border-radius:10px;
+}
+#regForm input, label{display:table-cell;}
+#regForm p{
+    display:table-row;
+}
+
 #loginForm{
     overflow:auto;
     display:block;
@@ -98,7 +121,7 @@ html{
     height:18em;
     margin-top:-9em;
     margin-left:-15em;
-    display:none;
+    display:table;
     padding:25px;
     border:outset;
     border-radius:10px;
@@ -126,13 +149,24 @@ html{
 }
 #register{
     border-color:black;
-    color:white;
 }
 #red{
     color:red;
 }
 #message{
     background-color: black;
+}
+a:visited{
+    color:black;
+}
+.logo-reg{
+    position:fixed;
+    top:15%;
+    left:47%;
+    width:30em;
+    height:18em;
+    margin-top:-9em;
+    margin-left:-15em;
 }
 /*
     font-family: 'Courier Prime', monospace;
