@@ -360,7 +360,7 @@ public class EndpointsFunctionality {
 
     public String email(Request request, Response response){
         String from = "tpcbottyboi@gmail.com";
-        String pass ="botbot69";
+        String pass ="*******";
         String to = "andyboyce30@gmail.com";
         String host = "smtp.gmail.com";
         Properties properties = System.getProperties();
