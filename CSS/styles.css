@@ -77,7 +77,7 @@ html{
     padding:15px;
 }
 .drop-content{
-    display:block;
+    display:none;
     padding-left:20px;
 }
 .drop-btn:hover{
