@@ -10,10 +10,12 @@ public class SparkEndpoints {
         get("/Home", ep::home);
         get("/Login", ep::login);
         get("/Register", ep::register);
-        get("/add_part", ep::addPart);
+        get("/AddPart", ep::addPart);
+        get("/Email", ep::email);
+        get("/ValidatePart", ep::validatePart);
         get("/home", ep::home);
         get("/login", ep::login);
-        get("/test", ep::test);
+        get("/logout", ep::logout);
         get("/register", ep::register);
     }
 }

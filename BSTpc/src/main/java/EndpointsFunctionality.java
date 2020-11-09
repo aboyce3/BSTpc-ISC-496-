@@ -9,49 +9,48 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.util.*;
+import javax.mail.*;
+import javax.mail.internet.*;
+
 public class EndpointsFunctionality {
 
     public String accountCreation(Request request, Response response){
-        String userName = request.queryParams("userName");
+        String userName = request.queryParams("username");
         String password = request.queryParams("password");
-        String password2 = request.queryParams("password2");
+        String password2 = request.queryParams("confirm_password");
         String email = request.queryParams("email");
-        String first = request.queryParams("first");
-        String last = request.queryParams("last");
+        String first = request.queryParams("fName");
+        String last = request.queryParams("lName");
         Connection con;
-        String insert = "INSERT into users " + "(username, password, email, first, last)" + "VALUES " + "('" + userName + "','"
+        response.type("text/html");
+        String insert = "INSERT into TPC_DB.users " + "(uName, pass, email, firstName, lastName)" + "VALUES " + "('" + userName + "','"
                 + password + "','" + email + "','" + first + "','" + last + "')";
-        String lookup = "SELECT * FROM TPC_DB.users WHERE username = '" + userName + "'";
+        String lookup = "SELECT * FROM TPC_DB.users WHERE uName = '" + userName + "'";
         Statement statement = null;
         ResultSet result = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu:3306/TPC_DB", "aboyce3", "mysql");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/TPC_DB?user=root&password=password");
             statement = con.createStatement();
             result = statement.executeQuery(lookup);
             while (result.next()) {
-                String uName = result.getString("username");
+                String uName = result.getString("uName");
                 if (userName.contentEquals(uName))
-                    response.redirect("/ErrorCreating");
-                return "";
+                    response.redirect("/Register");
             }
-        } catch (SQLException | ClassNotFoundException e) {
-            System.out.println(e);
-            e.printStackTrace();
-        }
-        response.type("text/html");
+        } catch (SQLException | ClassNotFoundException e) { e.printStackTrace(); }
         if (userName == null || "".equals(userName) || password == null || "".equals(password) || password2 == null
-                || "".equals(password2)) {
-            response.redirect("/ErrorCreating");
-        } else if (!Pattern.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?"
+                || "".equals(password2))
+            response.redirect("/Register");
+         else if (!Pattern.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?"
                 + "^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")"
                 + "@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.)"
                 + "{3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\"
                 + "[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])", email)) {
-            response.redirect("/ErrorCreating");
-            return "";
+            response.redirect("/Register");
         } else if (password == null || "".equals(password) || !password.equals(password2)) {
-            response.redirect("/ErrorCreating");
+            response.redirect("/Register");
         } else {
             try {
                 if (statement != null) {
@@ -59,52 +58,98 @@ public class EndpointsFunctionality {
                     request.session().attribute("username", userName);
                     request.session().maxInactiveInterval(9999);
                     response.redirect("/Home");
-                    return"";
+                    return "";
                 } else
-                    response.redirect("/ErrorCreating");
+                    response.redirect("/Register");
                 return "";
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-        response.redirect("/ErrorCreating");
+        response.redirect("/Register");
+        return "";
+    }
+
+    public String validatePart(Request request, Response response){
+        String s = request.session().attribute("uName");
+        String partName = request.queryParams("partName");
+        String price = request.queryParams("price");
+        String description = request.queryParams("description");
+        String condition = request.queryParams("condition");
+        String category= request.queryParams("category");
+        Connection con;
+        String insert = "INSERT into TPC_DB.auctioned " + "(uName, partName, description, price, partCondition, category)" + "VALUES " + "('" +s+ "','"
+                + partName + "','" + description + "','" + price + "','" + condition + "','" + category +"')";
+        String lookup = "SELECT * FROM TPC_DB.auctioned WHERE uName = '" + s + "' AND partName = '" + partName + "'" ;
+        Statement statement = null;
+        ResultSet result = null;
+        response.type("text/html");
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/TPC_DB?user=root&password=password");
+            statement = con.createStatement();
+            result = statement.executeQuery(lookup);
+            while (result.next()) {
+                String uName = result.getString("uName");
+                if (uName.contentEquals(s)) response.redirect("/Home");
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        if (s == null || "".equals(s) || partName == null || "".equals(partName) || price == null
+                || "".equals(price) || description == null || "".equals(description) || condition == null ||
+                "".equals(condition) || category == null || "".equals(category))
+            response.redirect("/Home");
+         else try {
+                if (statement != null) {
+                    statement.executeUpdate(insert);
+                    response.redirect("/Home");
+                    return "";
+                } else
+                    response.redirect("/Home");
+                return "";
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        response.redirect("/Home");
         return "";
     }
 
     public String loginVerification(Request request, Response response){
-        String userName = request.queryParams("userName");
+        String userName = request.queryParams("username");
         String password = request.queryParams("password");
         Connection con = null;
-        String lookup = "SELECT * FROM TPC_DB.users WHERE username = '" + userName + "' AND password = '"
+        String lookup = "SELECT * FROM TPC_DB.users WHERE uName = '" + userName + "' AND pass = '"
                 + password + "';";
         Statement statement = null;
         ResultSet results = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu:3306/TCP_DB", "aboyce3", "mysql");
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/TPC_DB?user=root&password=password");
             statement = con.createStatement();
             results = statement.executeQuery(lookup);
             while (results.next()) {
-                String uName = results.getString("username");
-                String pass = results.getString("password");
+                String uName = results.getString("uName");
+                String pass = results.getString("pass");
                 if (userName.contentEquals(uName) && password.contentEquals(pass)) {
-                    request.session().attribute("username", userName);
-                    request.session().maxInactiveInterval(99999);;
+                    request.session().attribute("uName", userName);
+                    request.session().maxInactiveInterval(99999);
                     response.redirect("/Home");
                     return "";
                 }
             }
-            response.redirect("/ErrorLogin");
+            response.redirect("/Login");
             return "";
         } catch (SQLException | ClassNotFoundException e) {
-            response.redirect("ErrorLogin");
+            response.redirect("/Login");
             return "";
         }
     }
 
     public String home(Request request, Response response){
+        String s = request.session().attribute("uName");
         response.type("text/html");
-        return "<!DOCTYPE html>\n" +
+        String output = "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "    <head>\n" +
                 "        <title>Welcome to BSTpc!</title>\n" +
@@ -116,7 +161,7 @@ public class EndpointsFunctionality {
                 "    </head>\n" +
                 "    <body>\n" +
                 "        <div class=\"header\">\n" +
-                "            <a href=\"#home\"># Home</a>\n" +
+                "            <a href=\"home\">Home</a>\n" +
                 "            <a href=\"#contact\"># Contact Us</a>\n" +
                 "            <div class=\"sidenavigation\">\n" +
                 "                <button class=\"drop-btn\" onclick=\"drop()\"># Categories &#9660;</button>\n" +
@@ -133,11 +178,12 @@ public class EndpointsFunctionality {
                 "                    <a href=\"#\">SSDs</a>\n" +
                 "                    <a href=\"#\">USB Flash Drives & Memory Cards</a>\n" +
                 "                </div>\n" +
-                "            </div>\n" +
-                "            <a id=\"center\" href=\"add_part\">Add Part</a>\n" +
-                "            <a id=\"right\" href=\"login\">Login</a>\n" +
-                "            <a id=\"right\" href=\"register\">Register</a>\n" +
-                "        <div class=\"logo\">\n" +
+                "            </div>\n" ;
+        if(s != null)output += "            <a id=\"header\" href=\"AddPart\">Add Part</a>\n";
+        output +="            <a id=\"header-right\"";
+        if(s == null) output += "href=\"login\">Login</a>\n<a id=\"header-right\" href=\"register\">Register</a>\n";
+        else output += ">Hello, "+s+"</a> <a id=\"header-right\" href=\"logout\">Logout</a>";
+        return output += "        <div class=\"logo\">\n" +
                 "            <img src=\"logo.gif\" alt=\"TPC\">\n" +
                 "        <div class=\"search-bar\">\n" +
                 "            <input class=\"search\" type=\"text\" placeholder=\"Search...\" id=\"search\" name=\"search\">\n" +
@@ -149,6 +195,7 @@ public class EndpointsFunctionality {
                 "</html>\n";
     }
     public String login(Request request, Response response){
+        if(request.session().attribute("uName") != null) response.redirect("/home");
         response.type("text/html");
         return "<!DOCTYPE html>\n" +
                 "<html>\n" +
@@ -163,7 +210,7 @@ public class EndpointsFunctionality {
                 "        <div class=\"logo-reg\">\n" +
                 "            <img src=\"logo.gif\" alt=\"TPC\">\n" +
                 "            </div>\n" +
-                "<form id=\"loginForm\">\n" +
+                "<form id=\"form\" action=\"/ValidateLogin\" method=\"get\">\n" +
                 "    <p>\n" +
                 "        <label for=\"username\">Username: <span id=\"red\">*</span></label>\n" +
                 "        <input type=\"text\" name=\"username\" id=\"username\" required></input><br>\n" +
@@ -183,7 +230,9 @@ public class EndpointsFunctionality {
                 "    </html>";
     }
 
+
     public String addPart(Request request, Response response){
+        if(request.session().attribute("uName") == null) response.redirect("/Home");
         response.type("text/html");
         return "<!DOCTYPE html>\n" +
                 "<html>\n" +
@@ -198,7 +247,7 @@ public class EndpointsFunctionality {
                 "        <div class=\"logo-reg\">\n" +
                 "            <img src=\"logo.gif\" alt=\"TPC\">\n" +
                 "            </div>\n" +
-                "<form id=\"loginForm\">\n" +
+                "<form id=\"form\" action=\"/ValidatePart\" method=\"get\">\n" +
                 "<p>\n" +
                 "    <label for=\"partName\">Part Name: <span id=\"red\">*</span></label>\n" +
                 "    <input type=\"text\" name=\"partName\" id=\"partName\" required></input><br/>\n" +
@@ -207,40 +256,46 @@ public class EndpointsFunctionality {
                 "    <label for=\"price\">Asking Price (USD): <span id=\"red\">*</span></label>\n" +
                 "    <input type=\"number\" name=\"price\" id=\"price\" required></input><br/>\n" +
                 "</p>\n" +
-                "<!--\n" +
                 "<p>\n" +
-                "    <label for=\"serial\">Serial #</label>\n" +
-                "    <input type=\"number\" name=\"serial\" id=\"serial\"></input><br/>\n" +
-                "</p>\n" +
-                "-->\n" +
-                "<p>\n" +
-                "    <label for=\"description\">Description <span id=\"red\">*</span></label>\n" +
+                "    <label for=\"description\">Description: <span id=\"red\">*</span></label>\n" +
                 "    <input type=\"text\" name=\"description\" id=\"description\" required></input><br/>\n" +
                 "</p>\n" +
                 "<hr/>\n" +
-                "<h2 id=\"flair\">Condition</h2>\n" +
-                "<div id=\"checks\">\n" +
                 "<p>\n" +
-                "    <input type=\"checkbox\" id=\"new\" name=\"new\" value=\"new\">\n" +
-                "    <label for=\"new\">New</label>\n" +
+                "<label for=\"condition\">Part Condition: </label>\n" +
+                "    <select name=\"condition\" id=\"condition\" required>\n" +
+                "        <option>Select an Option</option>\n" +
+                "        <option value=\"new\">New</option>\n" +
+                "        <option value=\"used\">Used</option>\n" +
+                "        <option value=\"refurbished\">Refurbished</option>\n" +
+                "    </select><br>\n" +
                 "</p>\n" +
                 "<p>\n" +
-                "    <input type=\"checkbox\" id=\"used\" name=\"used\" value=\"used\">\n" +
-                "    <label for=\"used\">Used</label>\n" +
+                "<label for=\"category\">Category: </label>\n" +
+                "    <select name=\"category\" id=\"category\" required>\n" +
+                "        <option>Select an Option</option>\n" +
+                "        <option value=\"CPU\">CPUs/Processors</option>\n" +
+                "        <option value=\"Memory\">Memory</option>\n" +
+                "        <option value=\"Motherboards\">Motherboards</option>\n" +
+                "        <option value=\"VideoCards\">Video Cards</option>\n" +
+                "        <option value=\"Cases\">Computer Cases</option>\n" +
+                "        <option value=\"Power\">Power Supplies</option>\n" +
+                "        <option value=\"Fans\">Fans & Cooling</option>\n" +
+                "        <option value=\"Sound\">Sound Cards</option>\n" +
+                "        <option value=\"HDD\">Hard Drives</option>\n" +
+                "        <option value=\"SSDs\">SSDs</option>\n" +
+                "        <option value=\"Storage\">USB Flash Drives & Memory Cards</option>\n" +
+                "    </select>\n" +
                 "</p>\n" +
-                "<p>\n" +
-                "    <input type=\"checkbox\" id=\"refurbished\" name=\"refurbished\" value=\"refurbished\">\n" +
-                "    <label for=\"refurbished\">Refurbished</label>\n" +
-                "</p>\n" +
-                "</div><br>\n" +
                 "<p><input id=\"register\" type=\"submit\" value=\"Add Part\"></input></p><br>\n" +
-                "    <a href = \"home\"> Close Form</a>\n" +
+                "    <a href = \"Home\">Close Form</a>\n" +
                 "    </form>\n" +
                 "    <script src = \"drop.js\"></script>\n" +
                 "    </html>";
     }
 
     public String register(Request request, Response response){
+        if(request.session().attribute("uName") != null) response.redirect("/home");
         response.type("text/html");
         return "<!DOCTYPE html>\n" +
                 "<html>\n" +
@@ -255,7 +310,7 @@ public class EndpointsFunctionality {
                 "    <div class=\"logo-reg\">\n" +
                 "            <img src=\"logo.gif\" alt=\"TPC\">\n" +
                 "            </div>\n" +
-                "<form id=\"regForm\">\n" +
+                "<form id=\"form\" action=\"/AccountCreation\" method=\"get\">\n" +
                 "    <p>\n" +
                 "        <label for=\"username\">Username: <span id=\"red\">*</span></label>\n" +
                 "        <input type=\"text\" name=\"username\" id=\"username\" required></input><br>\n" +
@@ -297,20 +352,41 @@ public class EndpointsFunctionality {
                 "</html>";
     }
 
-    public String test(Request request, Response response){
-        Connection con = null;
-        String lookup = "SELECT * FROM TPC_DB.users;";
-        Statement statement = null;
-        ResultSet results = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu:3306/TCP_DB", "aboyce3", "mysql");
-            statement = con.createStatement();
-            results = statement.executeQuery(lookup);
-            return "You're Connected!";
-        } catch (SQLException | ClassNotFoundException e) {
-            return "Not Connected";
+    public String logout(Request request, Response response){
+        request.session().attribute("uName", null);
+        response.redirect("/Home");
+        return "";
+    }
+
+    public String email(Request request, Response response){
+        String from = "tpcbottyboi@gmail.com";
+        String pass ="botbot69";
+        String to = "andyboyce30@gmail.com";
+        String host = "smtp.gmail.com";
+        Properties properties = System.getProperties();
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.user", from);
+        properties.put("mail.smtp.password", pass);
+        properties.put("mail.smtp.port", "587");
+        properties.put("mail.smtp.auth", "true");
+        Session session = Session.getDefaultInstance(properties);
+        try{
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
+            message.setSubject("This is the Subject Line!");
+            message.setText("This is actual message");
+            Transport transport = session.getTransport("smtp");
+            transport.connect(host, from, pass);
+            transport.sendMessage(message, message.getAllRecipients());
+            transport.close();
+            System.out.println("Sent message successfully....");
+        }catch (MessagingException mex) {
+            mex.printStackTrace();
+            return "failed";
         }
+        return "We made it!";
     }
 
 }
