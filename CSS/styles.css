@@ -141,13 +141,6 @@ a:visited{color:black;}
     background-color:#212121;
     color:white;
 }
-#add_part{
-    transition:ease, 0.5s;
-    background-color:#616161;
-    color:black;
-    padding-left:0px;
-    padding-right:0px;
-}
 #header-right{
     float:right;
 }
