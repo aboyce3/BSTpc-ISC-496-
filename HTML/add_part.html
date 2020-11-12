@@ -2,23 +2,19 @@
 <html>
     <head>
         <title>Welcome to BSTpc!</title>
-        <link href="https://fonts.googleapis.com/css2?
-                    family=Courier+Prime:ital,wght@0,
-                    400;0,700;1,400;1,700&display=swap"
-                    rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
     </head>
         <div class="logo-reg">
             <img src="../assets/logo.gif" alt="TPC">
             </div>
-<form id="form">
+<form class="form" id="font-courier-prime">
 <p>
     <label for="partName">Part Name: <span id="red">*</span></label>
     <input type="text" name="partName" id="partName" required></input><br/>
 </p>
 <p>
-    <label for="price">Asking Price (USD): <span id="red">*</span></label>
-    <input type="number" name="price" id="price" required></input><br/>
+    <label for="price">Asking Price: <span id="red">*</span></label>
+    <input type="number" name="price" id="price" placeholder="Prices are in USD!" required></input><br/>
 </p>
 <!--
 <p>
@@ -59,6 +55,6 @@
 </p>
 <p><input id="register" type="submit" value="Add Part"></input></p><br>
     <a href = "home.html">Close Form</a>
-    </form>
+</form>
     <script src = "../js/drop.js"></script>
     </html>

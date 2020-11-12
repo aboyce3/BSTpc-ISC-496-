@@ -2,35 +2,34 @@
 <html>
     <head>
         <title>Welcome to BSTpc!</title>
-        <link href="https://fonts.googleapis.com/css2?
-                    family=Courier+Prime:ital,wght@0,
-                    400;0,700;1,400;1,700&display=swap"
-                    rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="../CSS/styles.css">
     </head>
-    <body>
+    <body id="font-courier-prime">
         <div class="header">
+            <a id="nav-logo">TPC</a>
             <a href="#home"># Home</a>
             <a href="#contact"># Contact Us</a>
-            <div class="sidenavigation">
-                <button class="drop-btn" onclick="drop()"># Categories &#9660;</button>
-                <div class="drop-content">
-                    <a href="#">CPUs / Processors</a>
-                    <a href="#">Memory</a>
-                    <a href="#">Motherboards</a>
-                    <a href="#">Video Cards</a>
-                    <a href="#">Computer Cases</a>
-                    <a href="#">Power Supplies</a>
-                    <a href="#">Fans & PC Cooling</a>
-                    <a href="#">Sound Cards</a>
-                    <a href="#">Hard Drives</a>
-                    <a href="#">SSDs</a>
-                    <a href="#">USB Flash Drives & Memory Cards</a>
-                </div>
-            </div>
             <a id="header" href="add_part.html">Add Part</a>
             <a id="header-right" href="login.html">Login</a>
             <a id="header-right" href="register.html">Register</a>
+        </div>
+        <br>
+            <div class="sidenav">
+                <button class="dropdown" onclick="drop()" id="font-courier-prime"># Categories &#9660;</button>
+                <div id="dropdown" class="dropdown-content">
+                    <a href="search.html">CPUs / Processors</a>
+                    <a href="#search">Memory</a>
+                    <a href="#search">Motherboards</a>
+                    <a href="#search">Video Cards</a>
+                    <a href="#search">Computer Cases</a>
+                    <a href="#search">Power Supplies</a>
+                    <a href="#search">Fans & PC Cooling</a>
+                    <a href="#search">Sound Cards</a>
+                    <a href="#search">Hard Drives</a>
+                    <a href="#search">SSDs</a>
+                    <a href="#search">USB Flash Drives & Memory Cards</a>
+                </div>
+            </div>
         <div class="logo">
             <img src="../assets/logo.gif" alt="TPC">
         <div class="search-bar">
