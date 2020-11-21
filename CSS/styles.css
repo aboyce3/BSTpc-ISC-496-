@@ -179,7 +179,7 @@ html{
 .card:hover{
     background-color:#212121;
     transition:ease-out 0.5s;
-    transform: scale(1.5);
+    transform: scale(1.1);
 }
 .card:hover .inputs input{
     background-color:#616161;
