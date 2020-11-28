@@ -357,8 +357,8 @@ public class EndpointsFunctionality {
         String itemName = request.queryParams("part");
         String buyer = request.queryParams("buyer");
         String seller = request.queryParams("seller");
-        String from = "tpcbottyboi@gmail.com";
-        String pass ="botbot69";
+        String from = "******";
+        String pass ="******";
         String host = "smtp.gmail.com";
         Properties properties = System.getProperties();
         properties.put("mail.smtp.starttls.enable", "true");
