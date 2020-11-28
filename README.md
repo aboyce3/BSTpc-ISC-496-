@@ -22,7 +22,7 @@
 
 | ER Diagram |
 | ---------- | 
-| [ER] | 
+| ![ER] | 
 
 ## Color palette:
 
