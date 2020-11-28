@@ -20,9 +20,9 @@
 <img src = "https://flat.badgen.net/github/contributors/aboyce3/BSTpc-ISC-496-?cache=300"/></a>
 </div>
 
-| ER Diagram |
-| ---------- | 
-| ![ER] | 
+  | ER Diagram |
+  | ---------- | 
+  | ![ER] | 
 
 
 ## Color palette:
