@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to BSTpc!</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<div class="logo-reg">
+    <img src="logo.gif" alt="TPC">
+</div>
+<form class="form" id="font-courier-prime" action="/ValidateLogin" method="get">
+    <p>
+        <label for="username">Username: <span id="red">*</span></label>
+        <input type="text" name="username" id="username" required></input><br>
+    </p>
+    <p>
+        <label for="password">Password: <span id="red">*</span></label>
+        <input type="password" name="password" id="password" requried></input><br>
+    </p>
+    <p>
+        <input id="register" type="submit" value="Login!"></input>
+        <br><br>
+        <small>Don't have an account? <a href="/Register">Register</a></small>
+    </p>
+    <p>
+        <br/>
+        <a href = "/Home"> Close Form</a>
+</form>
+<script src = "drop.js"></script>
+</html>

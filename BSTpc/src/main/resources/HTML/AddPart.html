@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to BSTpc!</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<div class="logo-reg">
+    <img src="logo.gif" alt="TPC">
+</div>
+<form class="form" id="font-courier-prime" action="/ValidatePart" method="get">
+    <p>
+        <label for="partName">Part Name: <span id="red">*</span></label>
+        <input type="text" name="partName" id="partName" required></input><br/>
+    </p>
+    <p>
+        <label for="price">Asking Price: <span id="red">*</span></label>
+        <input type="number" name="price" id="price" placeholder="Prices are in USD!" required></input><br/>
+    </p>
+    <p>
+        <label for="description">Description: <span id="red">*</span></label>
+        <input type="text" name="description" id="description" required></input><br/>
+    </p>
+    <hr/>
+    <p>
+        <label for="condition">Part Condition: </label>
+        <select name="condition" id="condition" required>
+            <option>Select an Option</option>
+            <option value="new">New</option>
+            <option value="used">Used</option>
+            <option value="refurbished">Refurbished</option>
+        </select><br>
+    </p>
+    <p>
+        <label for="category">Category: </label>
+        <select name="category" id="category" required>
+            <option>Select an Option</option>
+            <option value="CPU">CPUs/Processors</option>
+            <option value="Memory">Memory</option>
+            <option value="Motherboards">Motherboards</option>
+            <option value="VideoCards">Video Cards</option>
+            <option value="Cases">Computer Cases</option>
+            <option value="Power">Power Supplies</option>
+            <option value="Fans">Fans & Cooling</option>
+            <option value="Sound">Sound Cards</option>
+            <option value="HDD">Hard Drives</option>
+            <option value="SSDs">SSDs</option>
+            <option value="Storage">USB Flash Drives & Memory Cards</option>
+        </select>
+    </p>
+    <p><input id="register" type="submit" value="Add Part"></input></p><br>
+    <a href = "/ValidatePart">Close Form</a>
+</form>
+<script src = "drop.js"></script>
+</html>

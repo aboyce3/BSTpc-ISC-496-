@@ -1,6 +1,10 @@
 import spark.Request;
 import spark.Response;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.text.NumberFormat;
 import java.util.regex.Pattern;
 
 import java.sql.Connection;
@@ -9,6 +13,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import com.google.common.io.Files;
+
 import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
@@ -16,28 +22,33 @@ import javax.mail.internet.*;
 public class EndpointsFunctionality {
 
     public String accountCreation(Request request, Response response){
+        boolean found = false;
         String userName = request.queryParams("username");
         String password = request.queryParams("password");
         String password2 = request.queryParams("confirm_password");
         String email = request.queryParams("email");
         String first = request.queryParams("fName");
         String last = request.queryParams("lName");
+        User user = new User(userName, first, last,email);
+        int i = user.hashCode();
         Connection con;
         response.type("text/html");
-        String insert = "INSERT into TPC_DB.users " + "(uName, pass, email, firstName, lastName)" + "VALUES " + "('" + userName + "','"
-                + password + "','" + email + "','" + first + "','" + last + "')";
+        String insert = "INSERT into TPC_DB.users " + "(uName, pass, email, firstName, lastName, secretKey)" + "VALUES " + "('" + userName + "','"
+                + password + "','" + email + "','" + first + "','" + last + "','"+ i + "')";
         String lookup = "SELECT * FROM TPC_DB.users WHERE uName = '" + userName + "'";
         Statement statement = null;
-        ResultSet result = null;
+        ResultSet result;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/TPC_DB?user=root&password=password");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
             statement = con.createStatement();
             result = statement.executeQuery(lookup);
             while (result.next()) {
                 String uName = result.getString("uName");
-                if (userName.contentEquals(uName))
+                if (userName.contentEquals(uName)) {
+                    found = true;
                     response.redirect("/Register");
+                }
             }
         } catch (SQLException | ClassNotFoundException e) { e.printStackTrace(); }
         if (userName == null || "".equals(userName) || password == null || "".equals(password) || password2 == null
@@ -51,12 +62,29 @@ public class EndpointsFunctionality {
             response.redirect("/Register");
         } else if (password == null || "".equals(password) || !password.equals(password2)) {
             response.redirect("/Register");
-        } else {
+        } else if(!found){
             try {
                 if (statement != null) {
+                    String secretKey = "";
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+                        statement = con.createStatement();
+                        result = statement.executeQuery(lookup);
+                        while (result.next()) {
+                            String uName = result.getString("uName");
+                            if (userName.contentEquals(uName)) {
+                                secretKey = result.getString("secretKey");
+                            }
+                        }
+                    } catch (SQLException | ClassNotFoundException e) { e.printStackTrace(); }
                     statement.executeUpdate(insert);
-                    request.session().attribute("username", userName);
-                    request.session().maxInactiveInterval(9999);
+                    request.session().attribute("uName", userName);
+                    request.session().maxInactiveInterval(99999);
+                    request.session().attribute("uEmail", email);
+                    request.session().maxInactiveInterval(99999);
+                    request.session().attribute("secretKey", secretKey);
+                    request.session().maxInactiveInterval(99999);
                     response.redirect("/Home");
                     return "";
                 } else
@@ -86,7 +114,7 @@ public class EndpointsFunctionality {
         response.type("text/html");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/TPC_DB?user=root&password=password");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
             statement = con.createStatement();
             result = statement.executeQuery(lookup);
             while (result.next()) {
@@ -101,7 +129,7 @@ public class EndpointsFunctionality {
                 "".equals(condition) || category == null || "".equals(category))
             response.redirect("/Home");
          else try {
-                if (statement != null) {
+                if (statement != null && !partName.contains("_")) {
                     statement.executeUpdate(insert);
                     response.redirect("/Home");
                     return "";
@@ -118,21 +146,39 @@ public class EndpointsFunctionality {
     public String loginVerification(Request request, Response response){
         String userName = request.queryParams("username");
         String password = request.queryParams("password");
-        Connection con = null;
+        Connection con;
+        ResultSet result;
         String lookup = "SELECT * FROM TPC_DB.users WHERE uName = '" + userName + "' AND pass = '"
                 + password + "';";
-        Statement statement = null;
-        ResultSet results = null;
+        Statement statement;
+        ResultSet results;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/TPC_DB?user=root&password=password");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
             statement = con.createStatement();
             results = statement.executeQuery(lookup);
             while (results.next()) {
                 String uName = results.getString("uName");
                 String pass = results.getString("pass");
+                String email = results.getString("email");
                 if (userName.contentEquals(uName) && password.contentEquals(pass)) {
+                    String secretKey = "";
+                    try {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+                        statement = con.createStatement();
+                        result = statement.executeQuery(lookup);
+                        while (result.next()) {
+                            if (userName.contentEquals(uName)) {
+                                secretKey = result.getString("secretKey");
+                            }
+                        }
+                    } catch (SQLException | ClassNotFoundException e) { e.printStackTrace(); }
                     request.session().attribute("uName", userName);
+                    request.session().maxInactiveInterval(99999);
+                    request.session().attribute("uEmail", email);
+                    request.session().maxInactiveInterval(99999);
+                    request.session().attribute("secretKey", secretKey);
                     request.session().maxInactiveInterval(99999);
                     response.redirect("/Home");
                     return "";
@@ -146,210 +192,156 @@ public class EndpointsFunctionality {
         }
     }
 
-    public String home(Request request, Response response){
+    public String home(Request request, Response response) throws IOException {
         String s = request.session().attribute("uName");
         response.type("text/html");
-        String output = "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "    <head>\n" +
-                "        <title>Welcome to BSTpc!</title>\n" +
-                "        <link href=\"https://fonts.googleapis.com/css2?\n" +
-                "                    family=Courier+Prime:ital,wght@0,\n" +
-                "                    400;0,700;1,400;1,700&display=swap\"\n" +
-                "                    rel=\"stylesheet\">\n" +
-                "        <link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\">\n" +
-                "    </head>\n" +
-                "    <body>\n" +
-                "        <div class=\"header\">\n" +
-                "            <a href=\"home\">Home</a>\n" +
-                "            <a href=\"#contact\"># Contact Us</a>\n" +
-                "            <div class=\"sidenavigation\">\n" +
-                "                <button class=\"drop-btn\" onclick=\"drop()\"># Categories &#9660;</button>\n" +
-                "                <div class=\"drop-content\">\n" +
-                "                    <a href=\"#\">CPUs / Processors</a>\n" +
-                "                    <a href=\"#\">Memory</a>\n" +
-                "                    <a href=\"#\">Motherboards</a>\n" +
-                "                    <a href=\"#\">Video Cards</a>\n" +
-                "                    <a href=\"#\">Computer Cases</a>\n" +
-                "                    <a href=\"#\">Power Supplies</a>\n" +
-                "                    <a href=\"#\">Fans & PC Cooling</a>\n" +
-                "                    <a href=\"#\">Sound Cards</a>\n" +
-                "                    <a href=\"#\">Hard Drives</a>\n" +
-                "                    <a href=\"#\">SSDs</a>\n" +
-                "                    <a href=\"#\">USB Flash Drives & Memory Cards</a>\n" +
-                "                </div>\n" +
-                "            </div>\n" ;
-        if(s != null)output += "            <a id=\"header\" href=\"AddPart\">Add Part</a>\n";
-        output +="            <a id=\"header-right\"";
-        if(s == null) output += "href=\"login\">Login</a>\n<a id=\"header-right\" href=\"register\">Register</a>\n";
-        else output += ">Hello, "+s+"</a> <a id=\"header-right\" href=\"logout\">Logout</a>";
-        return output += "        <div class=\"logo\">\n" +
-                "            <img src=\"logo.gif\" alt=\"TPC\">\n" +
-                "        <div class=\"search-bar\">\n" +
-                "            <input class=\"search\" type=\"text\" placeholder=\"Search...\" id=\"search\" name=\"search\">\n" +
-                "            <input class=\"submit\"type=\"submit\" value=\"Search!\">\n" +
-                "        </div>\n" +
-                "        </div>\n" +
-                "        <script src = \"drop.js\"></script>\n" +
-                "    </body>\n" +
-                "</html>\n";
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Home.html"), StandardCharsets.UTF_8).read();
+        String output ="";
+        if(s != null) output+= "            <a id=\"header\" href=\"/AddPart\">Add Part</a>\n" +
+                "<a href=\"/logout\"id =\"header-right\">Logout</a>" +
+                                "<a id =\"header-right\">Hello, "+s+"</a>";
+        else output+="            <a id=\"header-right\" href=\"/Login\">Login</a>\n" +
+                        "            <a id=\"header-right\" href=\"/Register\">Register</a>\n";
+
+        return content.replace("{AddHere}",output);
     }
-    public String login(Request request, Response response){
+
+    public String login(Request request, Response response) throws IOException {
         if(request.session().attribute("uName") != null) response.redirect("/home");
         response.type("text/html");
-        return "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "    <head>\n" +
-                "        <title>Welcome to BSTpc!</title>\n" +
-                "        <link href=\"https://fonts.googleapis.com/css2?\n" +
-                "                    family=Courier+Prime:ital,wght@0,\n" +
-                "                    400;0,700;1,400;1,700&display=swap\"\n" +
-                "                    rel=\"stylesheet\">\n" +
-                "        <link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\">\n" +
-                "    </head>\n" +
-                "        <div class=\"logo-reg\">\n" +
-                "            <img src=\"logo.gif\" alt=\"TPC\">\n" +
-                "            </div>\n" +
-                "<form id=\"form\" action=\"/ValidateLogin\" method=\"get\">\n" +
-                "    <p>\n" +
-                "        <label for=\"username\">Username: <span id=\"red\">*</span></label>\n" +
-                "        <input type=\"text\" name=\"username\" id=\"username\" required></input><br>\n" +
-                "        </p>\n" +
-                "    <p>\n" +
-                "        <label for=\"password\">Password: <span id=\"red\">*</span></label>\n" +
-                "        <input type=\"password\" name=\"password\" id=\"password\" requried></input><br>\n" +
-                "        </p>\n" +
-                "        <p>\n" +
-                "    <input id=\"register\" type=\"submit\" value=\"Login!\"></input> \n" +
-                "        </p>\n" +
-                "    <p>\n" +
-                "    <br/>\n" +
-                "    <a href = \"home\"> Close Form</a>\n" +
-                "    </form>\n" +
-                "    <script src = \"drop.js\"></script>\n" +
-                "    </html>";
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Login.html"), StandardCharsets.UTF_8).read();
+        return content;
     }
 
-
-    public String addPart(Request request, Response response){
+    public String addPart(Request request, Response response) throws IOException {
         if(request.session().attribute("uName") == null) response.redirect("/Home");
         response.type("text/html");
-        return "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "    <head>\n" +
-                "        <title>Welcome to BSTpc!</title>\n" +
-                "        <link href=\"https://fonts.googleapis.com/css2?\n" +
-                "                    family=Courier+Prime:ital,wght@0,\n" +
-                "                    400;0,700;1,400;1,700&display=swap\"\n" +
-                "                    rel=\"stylesheet\">\n" +
-                "        <link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\">\n" +
-                "    </head>\n" +
-                "        <div class=\"logo-reg\">\n" +
-                "            <img src=\"logo.gif\" alt=\"TPC\">\n" +
-                "            </div>\n" +
-                "<form id=\"form\" action=\"/ValidatePart\" method=\"get\">\n" +
-                "<p>\n" +
-                "    <label for=\"partName\">Part Name: <span id=\"red\">*</span></label>\n" +
-                "    <input type=\"text\" name=\"partName\" id=\"partName\" required></input><br/>\n" +
-                "</p>\n" +
-                "<p>\n" +
-                "    <label for=\"price\">Asking Price (USD): <span id=\"red\">*</span></label>\n" +
-                "    <input type=\"number\" name=\"price\" id=\"price\" required></input><br/>\n" +
-                "</p>\n" +
-                "<p>\n" +
-                "    <label for=\"description\">Description: <span id=\"red\">*</span></label>\n" +
-                "    <input type=\"text\" name=\"description\" id=\"description\" required></input><br/>\n" +
-                "</p>\n" +
-                "<hr/>\n" +
-                "<p>\n" +
-                "<label for=\"condition\">Part Condition: </label>\n" +
-                "    <select name=\"condition\" id=\"condition\" required>\n" +
-                "        <option>Select an Option</option>\n" +
-                "        <option value=\"new\">New</option>\n" +
-                "        <option value=\"used\">Used</option>\n" +
-                "        <option value=\"refurbished\">Refurbished</option>\n" +
-                "    </select><br>\n" +
-                "</p>\n" +
-                "<p>\n" +
-                "<label for=\"category\">Category: </label>\n" +
-                "    <select name=\"category\" id=\"category\" required>\n" +
-                "        <option>Select an Option</option>\n" +
-                "        <option value=\"CPU\">CPUs/Processors</option>\n" +
-                "        <option value=\"Memory\">Memory</option>\n" +
-                "        <option value=\"Motherboards\">Motherboards</option>\n" +
-                "        <option value=\"VideoCards\">Video Cards</option>\n" +
-                "        <option value=\"Cases\">Computer Cases</option>\n" +
-                "        <option value=\"Power\">Power Supplies</option>\n" +
-                "        <option value=\"Fans\">Fans & Cooling</option>\n" +
-                "        <option value=\"Sound\">Sound Cards</option>\n" +
-                "        <option value=\"HDD\">Hard Drives</option>\n" +
-                "        <option value=\"SSDs\">SSDs</option>\n" +
-                "        <option value=\"Storage\">USB Flash Drives & Memory Cards</option>\n" +
-                "    </select>\n" +
-                "</p>\n" +
-                "<p><input id=\"register\" type=\"submit\" value=\"Add Part\"></input></p><br>\n" +
-                "    <a href = \"Home\">Close Form</a>\n" +
-                "    </form>\n" +
-                "    <script src = \"drop.js\"></script>\n" +
-                "    </html>";
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/AddPart.html"), StandardCharsets.UTF_8).read();
+        return content;
     }
 
-    public String register(Request request, Response response){
+    public String register(Request request, Response response) throws IOException {
         if(request.session().attribute("uName") != null) response.redirect("/home");
         response.type("text/html");
-        return "<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "    <head>\n" +
-                "        <title>Welcome to BSTpc!</title>\n" +
-                "        <link href=\"https://fonts.googleapis.com/css2?\n" +
-                "                    family=Courier+Prime:ital,wght@0,\n" +
-                "                    400;0,700;1,400;1,700&display=swap\"\n" +
-                "                    rel=\"stylesheet\">\n" +
-                "        <link rel=\"stylesheet\" type=\"text/css\" href=\"styles.css\">\n" +
-                "    </head>\n" +
-                "    <div class=\"logo-reg\">\n" +
-                "            <img src=\"logo.gif\" alt=\"TPC\">\n" +
-                "            </div>\n" +
-                "<form id=\"form\" action=\"/AccountCreation\" method=\"get\">\n" +
-                "    <p>\n" +
-                "        <label for=\"username\">Username: <span id=\"red\">*</span></label>\n" +
-                "        <input type=\"text\" name=\"username\" id=\"username\" required></input><br>\n" +
-                "        </p>\n" +
-                "        <br>\n" +
-                "    <p>\n" +
-                "        <label for=\"password\">Password: <span id=\"red\">*</span></label>\n" +
-                "        <input type=\"password\" name=\"password\" id=\"password\" onchange=\"check()\" requried></input><br>\n" +
-                "        </p>\n" +
-                "    <p>\n" +
-                "        <label for=\"password\">Confirm Password: <span id=\"red\">*</span></label>\n" +
-                "        <input type=\"password\" name=\"confirm_password\" id=\"confirm_password\" onchange=\"check()\" requried></input><br>\n" +
-                "        <span id = \"message\"></span>\n" +
-                "        </p>\n" +
-                "        <br>\n" +
-                "    <p>\n" +
-                "        <label for=\"fName\">First Name: <span id=\"red\">*</span></label>\n" +
-                "        <input type=\"text\" name=\"fName\" id=\"fName\" required></input>\n" +
-                "        </p>\n" +
-                "    <p>\n" +
-                "        <label for=\"lName\">Last Name: <span id=\"red\">*</span></label>\n" +
-                "        <input type=\"text\" name=\"lName\" id=\"lName\" required></input>\n" +
-                "        </p>\n" +
-                "        <br>\n" +
-                "    <p>\n" +
-                "        <label for=\"email\">Email: <span id=\"red\">*</span></label>\n" +
-                "        <input type=\"email\" name=\"email\" id=\"email\" required></input>\n" +
-                "        </p>\n" +
-                "        <br>\n" +
-                "        <p>\n" +
-                "    <input id=\"register\" id=\"login-button-positive\" type=\"submit\" value=\"Register!\" disabled></input> \n" +
-                "        </p>\n" +
-                "    <p>\n" +
-                "    <br/>\n" +
-                "    <!--<button id=\"login-button-negative\" onclick=\"showForm(5)\">Close Form</button>-->\n" +
-                "    <a href = \"home\"> Close Form</a>\n" +
-                "</form>\n" +
-                "<script src = \"drop.js\"></script>\n" +
-                "</html>";
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Register.html"), StandardCharsets.UTF_8).read();
+        return content;
+    }
+
+    public String search(Request request, Response response) throws IOException {
+        if(request.session().attribute("uName") == null) response.redirect("/home");
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Search.html"), StandardCharsets.UTF_8).read();
+        String s = request.session().attribute("uName");
+        content = content.replace("{s}", s);
+        response.type("text/html");
+        String output = "";
+        String category = request.queryParams("type");
+            Connection con;
+            String lookup =
+                    "SELECT auctioned.*, users.email, users.secretKey " +
+                    "FROM auctioned, users " +
+                    "WHERE auctioned.category = '"+ category +"' AND auctioned.uName = users.uName;";
+            Statement statement;
+            ResultSet results;
+            try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+                con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+                statement = con.createStatement();
+                results = statement.executeQuery(lookup);
+                while (results.next()) {
+                    NumberFormat format = NumberFormat.getInstance();
+                    format.setGroupingUsed(true);
+                    double price = Double.parseDouble(results.getString("price"));
+                    String to = results.getString("email");
+                    String itemName = results.getString("partName");
+                    String buyer = s;
+                    String seller = results.getString("uName");
+                    String redirect = "/Email?to="+to+"&part="+itemName+"&buyer="+buyer+"&seller="+seller;
+                    output += "<div class=\"column\">\n" +
+                            "                        <div class=\"card\">\n" +
+                            "                        <h3 id=\"card-title\">"+ results.getString("partName")+ "</h3>\n" +
+                            "                        <div class=\"inputs\">\n" +
+                            "                        <p>\n" +
+                            "                            <label for=\"price\" id=\"label\">Price: $"+ format.format(price) +"</label><hr/>\n" +
+                            "                            <label for=\"condition\" id=\"label\">Condition: "+ results.getString("partCondition") +"</label><hr/>\n" +
+                            "                            <label for=\"description\" id=\"label\">About: </label>\n" +
+                            "                            <input type=\"text\" id=\"description\" value=\""+results.getString("description")+"\" readonly></input>\n" +
+                            "                            <hr/>\n" +
+                            "                            <br/>\n" +
+                            "                            <button value=\"trade\" onclick=\"window.location.href='"+redirect+"'\" id=\"trade-button\" {activated}>Buy</button>\n" +
+                            "                        </p>" +
+                            "                        </div>\n" +
+                            "                        </div>\n" +
+                            "                    </div>";
+                    if(buyer.equals(seller)){
+                        output = output.replace("{activated}", "disabled");
+                    } else {
+                        output = output.replace("{activated}", "");
+                    }
+                }
+
+            } catch (SQLException | ClassNotFoundException e) {
+                response.redirect("/Home");
+                return "";
+            }
+        return content.replace("{InsertHere}", output);
+    }
+    public String searchByName(Request request, Response response) throws IOException {
+        if(request.session().attribute("uName") == null) response.redirect("/home");
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Search.html"), StandardCharsets.UTF_8).read();
+        String s = request.session().attribute("uName");
+        content = content.replace("{s}", s);
+        response.type("text/html");
+        String output = "";
+        String name = request.queryParams("search");
+        Connection con;
+        String lookup =
+                "SELECT auctioned.*, users.email, users.secretKey " +
+                "FROM auctioned, users " +
+                "WHERE auctioned.uName = users.uName AND auctioned.partName LIKE '%"+name+"%';";
+        Statement statement;
+        ResultSet results;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+            statement = con.createStatement();
+            results = statement.executeQuery(lookup);
+            while (results.next()) {
+                NumberFormat format = NumberFormat.getInstance();
+                format.setGroupingUsed(true);
+                double price = Double.parseDouble(results.getString("price"));
+                String to = results.getString("email");
+                String itemName = results.getString("partName");
+                String buyer = s;
+                String seller = results.getString("uName");
+                String redirect = "/Email?to="+to+"&part="+itemName+"&buyer="+buyer+"&seller="+seller;
+                output += "<div class=\"column\">\n" +
+                        "                        <div class=\"card\">\n" +
+                        "                        <h3 id=\"card-title\">"+ results.getString("partName")+ "</h3>\n" +
+                        "                        <div class=\"inputs\">\n" +
+                        "                        <p>\n" +
+                        "                            <label for=\"price\" id=\"label\">Price: $"+ format.format(price) +"</label><hr/>\n" +
+                        "                            <label for=\"condition\" id=\"label\">Condition: "+ results.getString("partCondition") +"</label><hr/>\n" +
+                        "                            <label for=\"description\" id=\"label\">About: </label>\n" +
+                        "                            <input type=\"text\" id=\"description\" value=\""+results.getString("description")+"\" readonly></input>\n" +
+                        "                            <hr/>\n" +
+                        "                            <br/>\n" +
+                        "                            <button value=\"trade\" onclick=\"window.location.href='"+redirect+"'\" id=\"trade-button\" {activated}>Buy</button>\n" +
+                        "                        </p>\n" +
+                        "                        </div>\n" +
+                        "                        </div>\n" +
+                        "                    </div>";
+                if(buyer.equals(seller)){
+                    output = output.replace("{activated}", "disabled");
+                } else {
+                    output = output.replace("{activated}", "");
+                }
+            }
+
+        } catch (SQLException | ClassNotFoundException e) {
+            response.redirect("/Home");
+            return "";
+        }
+        return content.replace("{InsertHere}", output);
     }
 
     public String logout(Request request, Response response){
@@ -359,9 +351,13 @@ public class EndpointsFunctionality {
     }
 
     public String email(Request request, Response response){
+        if(request.session().attribute("uName") == null) response.redirect("/home");
+        String to = request.queryParams("to");
+        String itemName = request.queryParams("part");
+        String buyer = request.queryParams("buyer");
+        String seller = request.queryParams("seller");
         String from = "tpcbottyboi@gmail.com";
-        String pass ="*******";
-        String to = "andyboyce30@gmail.com";
+        String pass ="botbot69";
         String host = "smtp.gmail.com";
         Properties properties = System.getProperties();
         properties.put("mail.smtp.starttls.enable", "true");
@@ -371,12 +367,26 @@ public class EndpointsFunctionality {
         properties.put("mail.smtp.port", "587");
         properties.put("mail.smtp.auth", "true");
         Session session = Session.getDefaultInstance(properties);
+        Connection con;
+        String delete ="DELETE FROM auctioned WHERE uName=\""+seller+"\" AND partname=\""+itemName+"\";\n";
+        Statement statement;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+            statement = con.createStatement();
+            statement.executeUpdate(delete);
+        } catch (SQLException | ClassNotFoundException e) {
+            response.redirect("/Home");
+            return "";
+        }
         try{
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.addRecipient(Message.RecipientType.TO,new InternetAddress(to));
-            message.setSubject("This is the Subject Line!");
-            message.setText("This is actual message");
+            message.setSubject("Request to buy/trade your " + itemName);
+            message.setText("Hello "+ seller+",\n\nWe are delighted to inform you that " + buyer + " has purchased your \""
+                    + itemName + "\". If you have any questions then reply to this email and we will get back to you as soon as possible.\n\n" +
+                    "-BottyBoi");
             Transport transport = session.getTransport("smtp");
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
@@ -384,9 +394,10 @@ public class EndpointsFunctionality {
             System.out.println("Sent message successfully....");
         }catch (MessagingException mex) {
             mex.printStackTrace();
-            return "failed";
+            response.redirect("/Home");
         }
-        return "We made it!";
+        response.redirect("/Home");
+        return "";
     }
 
 }

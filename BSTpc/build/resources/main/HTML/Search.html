@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to BSTpc!</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body id="font-courier-prime">
+<div class="header">
+    <a href="#" id="nav-logo">TPC</a>
+    <a href="/home">Home</a>
+    <a id="header" href="/AddPart">Add Part</a>
+    <a href="/logout" id ="header-right">Logout</a>
+    <a id ="header-right">Hello, {s}</a>
+</div>
+<br>
+<div class="sidenav">
+    <button class="dropdown" onclick="drop()" id="font-courier-prime">Categories &#9660;</button>
+    <div id="dropdown" class="dropdown-content">
+        <a href="/Search?type=CPU">CPUs / Processors</a>
+        <a href="/Search?type=Memory">Memory</a>
+        <a href="/Search?type=Motherboards">Motherboards</a>
+        <a href="/Search?type=VideoCards">Video Cards</a>
+        <a href="/Search?type=Cases">Computer Cases</a>
+        <a href="/Search?type=Power">Power Supplies</a>
+        <a href="/Search?type=Fans">Fans & PC Cooling</a>
+        <a href="/Search?type=Sound">Sound Cards</a>
+        <a href="/Search?type=HDD">Hard Drives</a>
+        <a href="/Search?type=SSDs">SSDs</a>
+        <a href="/Search?type=Storage">USB Flash Drives & Memory Cards</a>
+    </div>
+</div>
+<div class="card-container">
+    <div class="row">
+        {InsertHere}
+    </div>
+    <script src = "drop.js"></script>
+</body>
+</html>

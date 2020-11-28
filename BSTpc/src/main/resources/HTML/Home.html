@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to BSTpc!</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body id="font-courier-prime">
+<div class="header">
+    <a id="nav-logo">TPC</a>
+    <a href="/Home">Home</a>
+    <a href="#contact"># Contact Us</a>
+    {AddHere}
+</div>
+<br>
+<div class="sidenav">
+    <button class="dropdown" onclick="drop()" id="font-courier-prime">Categories &#9660;</button>
+    <div id="dropdown" class="dropdown-content">
+        <a href="/Search?type=CPU">CPUs / Processors</a>
+        <a href="/Search?type=Memory">Memory</a>
+        <a href="/Search?type=Motherboards">Motherboards</a>
+        <a href="/Search?type=VideoCards">Video Cards</a>
+        <a href="/Search?type=Cases">Computer Cases</a>
+        <a href="/Search?type=Power">Power Supplies</a>
+        <a href="/Search?type=Fans">Fans & PC Cooling</a>
+        <a href="/Search?type=Sound">Sound Cards</a>
+        <a href="/Search?type=HDD">Hard Drives</a>
+        <a href="/Search?type=SSDs">SSDs</a>
+        <a href="/Search?type=Storage">USB Flash Drives & Memory Cards</a>
+    </div>
+</div>
+<div class="logo">
+    <img src="logo.gif" alt="TPC">
+    <form id="font-courier-prime" action="/SearchName" method="get">
+    <div class="search-bar">
+            <input class="search" type="text" placeholder="Search..." id="search" name="search">
+             <input class="submit"type="submit" value="Search!">
+    </div>
+    </form>
+</div>
+<script src = "drop.js"></script>
+</body>
+</html>
