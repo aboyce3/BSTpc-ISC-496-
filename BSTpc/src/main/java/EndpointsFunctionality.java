@@ -230,8 +230,8 @@ public class EndpointsFunctionality {
     public String search(Request request, Response response) throws IOException {
         if(request.session().attribute("uName") == null) response.redirect("/home");
         String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Search.html"), StandardCharsets.UTF_8).read();
-        String s = request.session().attribute("uName");
-        content = content.replace("{s}", s);
+        String user = request.session().attribute("uName");
+        content = content.replace("{s}", user);
         response.type("text/html");
         String output = "";
         String category = request.queryParams("type");
@@ -253,7 +253,7 @@ public class EndpointsFunctionality {
                     double price = Double.parseDouble(results.getString("price"));
                     String to = results.getString("email");
                     String itemName = results.getString("partName");
-                    String buyer = s;
+                    String buyer = user;
                     String seller = results.getString("uName");
                     String redirect = "/Email?to="+to+"&part="+itemName+"&buyer="+buyer+"&seller="+seller;
                     output += "<div class=\"column\">\n" +
@@ -285,11 +285,12 @@ public class EndpointsFunctionality {
             }
         return content.replace("{InsertHere}", output);
     }
+    
     public String searchByName(Request request, Response response) throws IOException {
         if(request.session().attribute("uName") == null) response.redirect("/home");
         String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Search.html"), StandardCharsets.UTF_8).read();
-        String s = request.session().attribute("uName");
-        content = content.replace("{s}", s);
+        String user = request.session().attribute("uName");
+        content = content.replace("{s}", user);
         response.type("text/html");
         String output = "";
         String name = request.queryParams("search");
@@ -311,7 +312,7 @@ public class EndpointsFunctionality {
                 double price = Double.parseDouble(results.getString("price"));
                 String to = results.getString("email");
                 String itemName = results.getString("partName");
-                String buyer = s;
+                String buyer = user;
                 String seller = results.getString("uName");
                 String redirect = "/Email?to="+to+"&part="+itemName+"&buyer="+buyer+"&seller="+seller;
                 output += "<div class=\"column\">\n" +
