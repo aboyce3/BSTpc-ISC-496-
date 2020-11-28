@@ -37,8 +37,6 @@
 <hr/>
 
 # Links
-
-[ER]:(https://github.com/aboyce3/TPC-ISC-496-/blob/main/Diagrams/ER_TPC.png)<br/>
 [ER]: https://github.com/aboyce3/TPC-ISC-496-/blob/main/Diagrams/ER_TPC.png
 
 <img src = "https://flat.badgen.net/github/tag/aboyce3/BSTpc-ISC-496-?cache=300"/>
