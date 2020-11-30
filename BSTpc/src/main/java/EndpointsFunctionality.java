@@ -40,7 +40,7 @@ public class EndpointsFunctionality {
         ResultSet result;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
             statement = con.createStatement();
             result = statement.executeQuery(lookup);
             while (result.next()) {
@@ -68,7 +68,7 @@ public class EndpointsFunctionality {
                     String secretKey = "";
                     try {
                         Class.forName("com.mysql.cj.jdbc.Driver");
-                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
                         statement = con.createStatement();
                         result = statement.executeQuery(lookup);
                         while (result.next()) {
@@ -114,7 +114,7 @@ public class EndpointsFunctionality {
         response.type("text/html");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
             statement = con.createStatement();
             result = statement.executeQuery(lookup);
             while (result.next()) {
@@ -154,7 +154,7 @@ public class EndpointsFunctionality {
         ResultSet results;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
             statement = con.createStatement();
             results = statement.executeQuery(lookup);
             while (results.next()) {
@@ -165,7 +165,7 @@ public class EndpointsFunctionality {
                     String secretKey = "";
                     try {
                         Class.forName("com.mysql.cj.jdbc.Driver");
-                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
                         statement = con.createStatement();
                         result = statement.executeQuery(lookup);
                         while (result.next()) {
@@ -244,7 +244,7 @@ public class EndpointsFunctionality {
             ResultSet results;
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+                con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
                 statement = con.createStatement();
                 results = statement.executeQuery(lookup);
                 while (results.next()) {
@@ -303,7 +303,7 @@ public class EndpointsFunctionality {
         ResultSet results;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
             statement = con.createStatement();
             results = statement.executeQuery(lookup);
             while (results.next()) {
@@ -373,7 +373,7 @@ public class EndpointsFunctionality {
         Statement statement;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
             statement = con.createStatement();
             statement.executeUpdate(delete);
         } catch (SQLException | ClassNotFoundException e) {
