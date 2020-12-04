@@ -3,6 +3,7 @@ import spark.Response;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.regex.Pattern;
@@ -20,6 +21,45 @@ import javax.mail.*;
 import javax.mail.internet.*;
 
 public class EndpointsFunctionality {
+
+    public String home(Request request, Response response) throws IOException {
+        String s = request.session().attribute("uName");
+        response.type("text/html");
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Home.html"), StandardCharsets.UTF_8).read();
+        String output ="";
+        if(s != null) output+= "            <a id=\"header\" href=\"/AddPart\">Add Part</a>\n" +
+                "<a href=\"/logout\"id =\"header-right\">Logout</a>" +
+                                "<a id =\"header-right\">Hello, "+s+"</a>";
+        else output+="            <a id=\"header-right\" href=\"/Login\">Login</a>\n" +
+                        "            <a id=\"header-right\" href=\"/Register\">Register</a>\n";
+
+        return content.replace("{AddHere}",output);
+    }
+
+    public String login(Request request, Response response) throws IOException {
+        if(request.session().attribute("uName") != null) response.redirect("/home");
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Login.html"), StandardCharsets.UTF_8).read();
+        return content;
+    }
+
+    public String addPart(Request request, Response response) throws IOException {
+        if(request.session().attribute("uName") == null) response.redirect("/Home");
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/AddPart.html"), StandardCharsets.UTF_8).read();
+        return content;
+    }
+
+    public String register(Request request, Response response) throws IOException {
+        if(request.session().attribute("uName") != null) response.redirect("/home");
+        response.type("text/html");
+        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Register.html"), StandardCharsets.UTF_8).read();
+        return content;
+    }
+
+    public String logout(Request request, Response response){
+        request.session().attribute("uName", null);
+        response.redirect("/Home");
+        return "";
+    }
 
     public String accountCreation(Request request, Response response){
         boolean found = false;
@@ -40,7 +80,7 @@ public class EndpointsFunctionality {
         ResultSet result;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
             statement = con.createStatement();
             result = statement.executeQuery(lookup);
             while (result.next()) {
@@ -54,7 +94,7 @@ public class EndpointsFunctionality {
         if (userName == null || "".equals(userName) || password == null || "".equals(password) || password2 == null
                 || "".equals(password2))
             response.redirect("/Register");
-         else if (!Pattern.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?"
+        else if (!Pattern.matches("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?"
                 + "^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")"
                 + "@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.)"
                 + "{3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\"
@@ -68,7 +108,7 @@ public class EndpointsFunctionality {
                     String secretKey = "";
                     try {
                         Class.forName("com.mysql.cj.jdbc.Driver");
-                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
+                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
                         statement = con.createStatement();
                         result = statement.executeQuery(lookup);
                         while (result.next()) {
@@ -114,7 +154,7 @@ public class EndpointsFunctionality {
         response.type("text/html");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
             statement = con.createStatement();
             result = statement.executeQuery(lookup);
             while (result.next()) {
@@ -128,17 +168,17 @@ public class EndpointsFunctionality {
                 || "".equals(price) || description == null || "".equals(description) || condition == null ||
                 "".equals(condition) || category == null || "".equals(category))
             response.redirect("/Home");
-         else try {
-                if (statement != null && !partName.contains("_")) {
-                    statement.executeUpdate(insert);
-                    response.redirect("/Home");
-                    return "";
-                } else
-                    response.redirect("/Home");
+        else try {
+            if (statement != null && !partName.contains("_")) {
+                statement.executeUpdate(insert);
+                response.redirect("/Home");
                 return "";
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            } else
+                response.redirect("/Home");
+            return "";
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         response.redirect("/Home");
         return "";
     }
@@ -154,7 +194,7 @@ public class EndpointsFunctionality {
         ResultSet results;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
             statement = con.createStatement();
             results = statement.executeQuery(lookup);
             while (results.next()) {
@@ -165,7 +205,7 @@ public class EndpointsFunctionality {
                     String secretKey = "";
                     try {
                         Class.forName("com.mysql.cj.jdbc.Driver");
-                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
+                        con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
                         statement = con.createStatement();
                         result = statement.executeQuery(lookup);
                         while (result.next()) {
@@ -192,41 +232,6 @@ public class EndpointsFunctionality {
         }
     }
 
-    public String home(Request request, Response response) throws IOException {
-        String s = request.session().attribute("uName");
-        response.type("text/html");
-        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Home.html"), StandardCharsets.UTF_8).read();
-        String output ="";
-        if(s != null) output+= "            <a id=\"header\" href=\"/AddPart\">Add Part</a>\n" +
-                "<a href=\"/logout\"id =\"header-right\">Logout</a>" +
-                                "<a id =\"header-right\">Hello, "+s+"</a>";
-        else output+="            <a id=\"header-right\" href=\"/Login\">Login</a>\n" +
-                        "            <a id=\"header-right\" href=\"/Register\">Register</a>\n";
-
-        return content.replace("{AddHere}",output);
-    }
-
-    public String login(Request request, Response response) throws IOException {
-        if(request.session().attribute("uName") != null) response.redirect("/home");
-        response.type("text/html");
-        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Login.html"), StandardCharsets.UTF_8).read();
-        return content;
-    }
-
-    public String addPart(Request request, Response response) throws IOException {
-        if(request.session().attribute("uName") == null) response.redirect("/Home");
-        response.type("text/html");
-        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/AddPart.html"), StandardCharsets.UTF_8).read();
-        return content;
-    }
-
-    public String register(Request request, Response response) throws IOException {
-        if(request.session().attribute("uName") != null) response.redirect("/home");
-        response.type("text/html");
-        String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Register.html"), StandardCharsets.UTF_8).read();
-        return content;
-    }
-
     public String search(Request request, Response response) throws IOException {
         if(request.session().attribute("uName") == null) response.redirect("/home");
         String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Search.html"), StandardCharsets.UTF_8).read();
@@ -244,7 +249,7 @@ public class EndpointsFunctionality {
             ResultSet results;
             try {
                 Class.forName("com.mysql.cj.jdbc.Driver");
-                con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
+                con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
                 statement = con.createStatement();
                 results = statement.executeQuery(lookup);
                 while (results.next()) {
@@ -285,7 +290,7 @@ public class EndpointsFunctionality {
             }
         return content.replace("{InsertHere}", output);
     }
-    
+
     public String searchByName(Request request, Response response) throws IOException {
         if(request.session().attribute("uName") == null) response.redirect("/home");
         String content = Files.asCharSource(new File("/home/andrew/IdeaProjects/BSTpc/src/main/resources/HTML/Search.html"), StandardCharsets.UTF_8).read();
@@ -303,7 +308,7 @@ public class EndpointsFunctionality {
         ResultSet results;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
             statement = con.createStatement();
             results = statement.executeQuery(lookup);
             while (results.next()) {
@@ -345,20 +350,14 @@ public class EndpointsFunctionality {
         return content.replace("{InsertHere}", output);
     }
 
-    public String logout(Request request, Response response){
-        request.session().attribute("uName", null);
-        response.redirect("/Home");
-        return "";
-    }
-
     public String email(Request request, Response response){
         if(request.session().attribute("uName") == null) response.redirect("/home");
         String to = request.queryParams("to");
         String itemName = request.queryParams("part");
         String buyer = request.queryParams("buyer");
         String seller = request.queryParams("seller");
-        String from = "******";
-        String pass ="******";
+        String from = "tpcbottyboi@gmail.com";
+        String pass ="botbot69";
         String host = "smtp.gmail.com";
         Properties properties = System.getProperties();
         properties.put("mail.smtp.starttls.enable", "true");
@@ -373,7 +372,7 @@ public class EndpointsFunctionality {
         Statement statement;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=*****&password=****");
+            con = DriverManager.getConnection("jdbc:mysql://pi.cs.oswego.edu/TPC_DB?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&user=aboyce3&password=mysql");
             statement = con.createStatement();
             statement.executeUpdate(delete);
         } catch (SQLException | ClassNotFoundException e) {

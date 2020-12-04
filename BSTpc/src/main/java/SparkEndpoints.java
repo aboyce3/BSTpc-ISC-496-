@@ -5,7 +5,6 @@ public class SparkEndpoints {
     public static void main(String[] args) {
         EndpointsFunctionality ep = new EndpointsFunctionality();
         staticFileLocation("/public");
-        staticFileLocation("/HTML");
         get("/AccountCreation", ep::accountCreation);
         get("/ValidateLogin", ep::loginVerification);
         get("/Home", ep::home);
